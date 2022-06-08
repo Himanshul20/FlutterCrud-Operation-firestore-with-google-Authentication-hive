@@ -1,25 +1,25 @@
-/**
- * Our contact data model
- */
-
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
 part 'task.g.dart';
 
-@HiveType(typeId: 0) // use Hive to generate a type adapter
-class Task extends HiveObject {
-  // Define variables
-
+@HiveType(typeId: 0)
+class Task extends HiveObject{
   @HiveField(0)
-  final String task;
-
+  String? id;
   @HiveField(1)
-  final String description;
-
+  String task;
   @HiveField(2)
-  final String date;
+  DateTime? date;
+  @HiveField(3)
+  String description;
 
-  // Constructor
-  Task({required this.task, required this.description, required this.date});
+  Task({ this.id, required this.task, required this.description, this.date});
+
+
+
+
+
 }
+
+
+

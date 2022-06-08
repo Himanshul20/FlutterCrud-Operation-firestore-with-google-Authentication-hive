@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Provider/task_provider.dart';
-import '../models/task.dart';
-
+import '../Models/task.dart';
+import '../Providers/taskprovider.dart';
 
 class ViewTask extends StatefulWidget {
   static const Routename ='/ViewTask';
-  final Task currentContact;
-  ViewTask({required this.currentContact});
 
   @override
   State<ViewTask> createState() => _ViewTaskState();
 }
 
 class _ViewTaskState extends State<ViewTask> {
-  late String newTask;
-  late String newDescription;
-  late String date;
-
+    int? index;
     @override
-    void initState() {
-      /// Set the initial text field value and state value for the currentClient on initial load
-      newTask = widget.currentContact.task;
-
-      date=widget.currentContact.date;
-      newDescription = widget.currentContact.description;
-
-      super.initState();
+    void didChangeDependencies() {
+      index = ModalRoute.of(context)?.settings.arguments as int?;
+      super.didChangeDependencies();
     }
 
-
-    @override
+  @override
   Widget build(BuildContext context) {
+    final data=Provider.of<Tasks>(context).tasks;
+    print('Index is ${index}');
     return Scaffold(
       body: Container(
           width: double.infinity,
@@ -61,12 +51,12 @@ class _ViewTaskState extends State<ViewTask> {
                       padding: EdgeInsets.all(5),
                       child: Row(
                         children: [
-                          Text("Id : 1"),
+                          Text("Id : ${data[index!].id}"),
                           SizedBox(
                             width: 60,
                           ),
                           Icon(Icons.calendar_today_outlined),
-                          Text(date)
+                          Text("${data[index!].date}")
                         ],
                       ),
                     ),
@@ -87,7 +77,7 @@ class _ViewTaskState extends State<ViewTask> {
                     // color: Colors.grey,
                     child: Padding(
                       padding: EdgeInsets.all(15),
-                      child: Text(newTask),
+                      child: Text(data[index!].task),
                     ),
                   )),
               Positioned(
@@ -106,7 +96,7 @@ class _ViewTaskState extends State<ViewTask> {
                     // color: Colors.grey,
                     child: Padding(
                       padding: EdgeInsets.all(15),
-                      child: Text(newDescription),
+                      child: Text(data[index!].description),
                     ),
                   ))
 
